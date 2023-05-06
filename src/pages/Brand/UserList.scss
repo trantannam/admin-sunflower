@@ -1,0 +1,69 @@
+.userlist {
+    flex: 4;
+
+    &__header {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        &-title {
+            font-size: 1.7rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        &-create {
+            border: none;
+            padding: 6px 8px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            background-color: $main-color;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+
+    &__main {
+        height: 100%;
+    }
+
+    .columnUser {
+        display: flex;
+        align-items: center;
+
+        &__img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        span {
+            font-size: 1.2rem;
+        }
+    }
+
+    .behavior {
+        display: flex;
+        align-items: center;
+
+        &__edit {
+            border: none;
+            padding: 5px 10px;
+            background-color: #55d195;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            line-height: 1.5;
+            color: white;
+            cursor: pointer;
+        }
+
+        &__delete {
+            border: none;
+            cursor: pointer;
+            background-color: unset;
+            font-size: 1.3rem;
+            color: rgb(230, 92, 92);
+        }
+    }
+}

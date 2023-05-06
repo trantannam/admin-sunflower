@@ -1,0 +1,58 @@
+.sidebar {
+    min-width: 300px;
+    background-color: #111d2f;
+    color: #fff;
+    height: calc(100vh);
+    position: sticky;
+    top: 0;
+    bottom: 0;
+
+    &__wrapper {
+        padding: 20px;
+        color: #fff;
+        &__menu {
+            margin-bottom: 20px;
+            .menuTitle {
+                font-size: 3rem;
+                font-weight: 600;
+                color: #fff;
+                padding-bottom: 15px;
+                border-bottom: 1px solid #eee;
+                margin-bottom: 20px;
+            }
+
+            .menuList {
+                padding: 5px;
+
+                &__item {
+                    padding: 8px;
+                    cursor: pointer;
+                    font-size: 2rem;
+                    display: flex;
+                    align-items: center;
+                    border-radius: 4px;
+                    margin-bottom: 3px;
+
+                    &:hover {
+                        background-color: #3d494b;
+                        opacity: .8;
+                    }
+
+                    &.active {
+                        background-color: #3d494b;
+                    }
+
+                    &-icon {
+                        font-size: 2rem;
+                        margin-right: 10px;
+                    }
+
+                    &-name {
+                        font-size: 2rem;
+                        margin-left: 3px;
+                    }
+                }
+            }
+        }
+    }
+}

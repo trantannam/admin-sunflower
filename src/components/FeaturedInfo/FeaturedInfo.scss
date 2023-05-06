@@ -1,0 +1,60 @@
+.featured {
+    width: 100%;
+    display : flex;
+    justify-content: space-between;
+
+    &__item {
+        position: relative;
+        flex: 1;
+        margin: 10px 20px;
+        padding: 30px;
+        border-radius : 10px;
+        cursor: pointer;
+        box-shadow: $box-shadow;
+        display : flex;
+        align-items: center;
+
+        i{
+            font-size: 4rem;
+        }
+
+        &-content{
+            margin: 10px 0px;
+
+            &-title{
+                font-size: 1.7rem;            }
+
+            &-money{
+                font-size: 2rem;
+                font-weight : 600;
+                display : block;
+            }
+
+        }
+        &-icon {
+            opacity: .2;
+            position: absolute;
+            right: 2rem;
+            font-size: 8rem;
+        }
+    }
+}
+
+.color-green {
+    background-color: #22a932;
+    color: #ffffff;
+}
+.color-blue {
+    background-color: #1eb3e1;
+    color: #ffffff;
+}
+.color-total {
+    background-color: #cf8a1c;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 1140px){
+    .featured {
+        flex-direction: column;
+    }
+}

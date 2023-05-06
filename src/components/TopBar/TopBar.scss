@@ -1,0 +1,65 @@
+.topbar{
+    width: 85%;
+    height: 50px;
+    background-color: #fff;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    box-shadow: 2px 2px 4px rgba(0,0,0, 0.5);
+
+    &__Wrapper{
+        height: 100%;
+        padding: 0px 20px;
+        display : flex;
+        @include flex(center,space-between);
+
+
+        .topLeft{
+            &__logo{
+
+                &-img{
+                    width: 144px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .topRight{
+            display: flex;
+            // justify-content: space-between;
+            align-items:center;
+            
+            &__icon{
+                position : relative;
+                cursor: pointer;
+                margin-right: 15px;
+                color: #555;
+                .noti{
+                    font-size: 2.3rem;
+                }
+
+                &-amount{
+                    font-size: 1.4rem;
+                    position: absolute;
+                    right : -5px;
+                    top: -8px;
+                    background-color: red;
+                    color: #fff;
+                    width: 17px;
+                    height: 17px;
+                    border-radius:50%;
+                    display : flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            &__avatar{
+                width: 40px;
+                height: 40px;
+                border-radius : 50%;
+                cursor: pointer;
+            }
+        }
+    }
+}

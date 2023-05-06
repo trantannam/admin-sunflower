@@ -1,0 +1,27 @@
+.home {
+    padding-top: 64px;
+
+    .analytics {
+        width: 100%;
+    }
+
+    .total__category {
+        border: 1px solid $main-color;
+        margin: 20px;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: $box-shadow;
+        width: 50%;
+
+        .total__category-process {
+            @include flex(center, flex-start);
+
+            p {
+                width: 100px;
+                padding: 8px;
+                font-size: 20px;
+                font-weight: 600;
+            }
+        }
+    }
+}

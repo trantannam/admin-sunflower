@@ -1,0 +1,25 @@
+.loading{
+    padding : 1rem;
+    border: 1rem solid transparent;
+    position: relative;
+    margin-top: calc(20px * 1);
+    font-size : 2rem;
+}
+.spin {
+    display: inline-block;
+    margin: 0.2rem;
+    border-radius: 50%;
+    animation: spiner;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+}
+
+@keyframes spiner {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}

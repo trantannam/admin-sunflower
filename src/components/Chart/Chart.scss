@@ -1,0 +1,14 @@
+.chart {
+    margin: 20px;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    box-shadow: $box-shadow;
+    // background-color: green;
+
+    &__title {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+}

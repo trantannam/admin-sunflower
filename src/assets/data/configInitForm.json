@@ -1,0 +1,87 @@
+{
+  "dong_co": [
+    {
+      "name":"Động cơ", "value":"Crossplane 4 xy lanh, DOHC, 4 thì, làm mát bằng dung dịch"
+    },
+    {
+      "name":"Dung tích", "value":"998cc"
+    },
+    {
+      "name":"Đường kính pistion ", "value":"79.0 mm x 50.9 mm"
+    },
+    {
+      "name":"Tỉ số nén", "value":"12:1"
+    },
+    {
+      "name":"Công suất cực đại", "value":"160 mã lực tại 11,500 vòng/phút"
+    },
+    {
+      "name":"Momen xoan cực đại", "value":"112 Nm tại 9,000 vòng/phút"
+    },
+    {
+      "name":"Bộ ly hợp", "value":"Ly hợp ướt"
+    },
+    {
+      "name":"Hệ thống đánh lửa", "value":"TCI"
+    },
+    {
+      "name":"Hệ thống khởi động", "value":"Điện tử"
+    },
+    {
+      "name":"Hộp số", "value":"6 cấp"
+    },
+    {
+      "name":"Mức tiêu thụ nhiên liệu", "value":"8.0L/100km"
+    },
+    { 
+      "name":"Hệ thống phun xăng", "value":"Điện tử"
+    }
+  ],
+  "ket_cau": [
+    {
+      "name":"Khung xe", "value":"Deltabox"},
+    {
+      "name":"Góc lái", "value":"24º"},
+    {
+      "name":"Độ trượt", "value":"102 mm"},
+    {
+      "name":"Hệ thống giảm xóc trước", "value":"Phuộc KYB hành trình ngược, tùy chỉnh toàn phần"},
+    {
+      "name":"Hệ thống treo sau", "value":"KYB monoshock, tùy chỉnh toàn phần"},
+    {
+      "name":"Hành trình phuộc trước", "value":"120 mm"},
+    {
+      "name":"Hành trình phuộc sau", "value":"120 mm"},
+    {
+      "name":"Phanh trước", "value":"Đĩa kép thủy lực, Ø 320 mm"},
+    {
+      "name":"Phanh sau", "value":"Đĩa đơn thủy lực, Ø 220 mm"},
+    {
+      "name":"Lốp trước", "value":"Lốp không xăm, 120/70 ZR17 M/C (58W)"},
+    {
+      "name":"Lốp sau", "value":"Lốp không xăm, 190/55 ZR17 M/C (75W)"
+    }
+  ], 
+  "kich_thuoc": [
+    {
+      "name":"Dài x rộng x cao", "value":"2,095 x 800 x 1,110 (mm)"},
+    {
+      "name":"Chiều cao yên", "value":"825 mm"
+    },
+    {
+      "name":"Trục cơ sở", "value":"1,400 mm"
+    },
+    {
+      "name":"Khoảng sáng gầm", "value":"130 mm"
+    },
+    {
+      "name":"Trọng lượng ướt", "value":"210 kg"
+    },
+    {
+      "name":"Dung tích bình xăng", "value":"17 L"
+    },
+    {
+      "name":"Dung tích nhớt", "value":"3.9 L"
+    }
+  ]
+}

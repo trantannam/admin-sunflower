@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import Layout from 'components/Layout';
+import Login from 'pages/Login';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './index.css';
+import './sass/index.scss';
 
 function App() {
+  const { userSignin } = useSelector(state => state);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userSignin.name) {
+      return navigate('/login')
+    }
+  }, [userSignin])
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        {
+          userSignin.accessToken &&
+          <Route path="*" element={<Layout/>}/>
+        }
+      </Routes>
+      <ToastContainer style={{ fontSize: 15, zIndex: 1000 }} />
     </div>
   );
 }

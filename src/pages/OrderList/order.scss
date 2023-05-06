@@ -1,0 +1,177 @@
+.order {
+    flex: 4;
+
+    .detail-order {
+        background: #09bed6;
+        padding: 4px;
+        line-height: 1.5;
+
+        color: #fff;
+        border-radius: 6px;
+        font-size: 15px;
+    }
+
+    .del-order {
+        color: #e65c5c;
+        font-size: 18px;
+        padding: 4px;
+        margin-left: 10px;
+    }
+}
+
+.item-pending,
+.item-home,
+.item-store,
+.item-transport,
+.item-received,
+.item-cancle {
+    @include btn;
+
+    line-height: 1.5;
+    display: inline-block;
+    padding: 4px;
+    font-size: 14px;
+    color: #fff;
+
+    border-radius: 8px;
+}
+
+.my-order-list-item {
+    width: 100%;
+    position: relative;
+    padding: 12px 24px;
+    margin: 20px 0 32px;
+
+    border-top: 1px solid rgba(5, 169, 194, 0.8);
+    border-bottom: 1px solid rgba(5, 169, 194, 0.8);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 14px;
+    border-radius: 8px;
+
+    .item-tag {
+        position: absolute;
+        top: 0;
+        left: 4px;
+        font-size: 26px;
+    }
+
+    .item-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e3e7ef;
+
+        &-left {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        &-status_right {
+            min-width: 125px;
+            text-align: right;
+        }
+    }
+    .item-content-items {
+        .item-content {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            border-bottom: 1px solid #e3e7ef;
+            margin: 4px 8px;
+
+            img {
+                width: 100px;
+                height: 80px;
+                object-fit: cover;
+            }
+
+            &-info {
+                padding: 8px;
+                p {
+                    font-size: 15px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+                i {
+                    font-size: 12px;
+                }
+            }
+
+            &-price {
+                flex: 1;
+                padding: 10px;
+                text-align: right;
+                font-size: 14px;
+                text-decoration: underline;
+            }
+            &:hover {
+                color: #e23719;
+            }
+        }
+    }
+
+    .item-total {
+        padding: 8px 15px;
+        color: #e23719;
+        font-size: 20px;
+        width: 100%;
+        text-align: right;
+    }
+}
+
+.btn-pending,
+.btn-transport,
+.btn-received,
+.btn-cancel,
+.btn-info {
+    @apply m-2 items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.btn-pending {
+    @apply bg-yellow-300;
+}
+.btn-transport {
+    background: #f5e617;
+    color: white;
+}
+.btn-received {
+    @apply bg-green-200 text-green-800;
+}
+.btn-cancel {
+    @apply bg-red-600 text-white hover:opacity-80;
+}
+.btn-info {
+    @apply bg-blue-400 text-white hover:opacity-80;
+}
+
+fieldset {
+    border-top: 1px solid #808080;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    padding: 10px 4px;
+
+    legend {
+        font-weight: bold;
+        font-size: 18px;
+        margin-left: 10px;
+        padding: 4px;
+    }
+}
+
+.item-pending {
+    background: #f5b318;
+}
+.item-transport {
+    background: #c59512;
+}
+.item-received {
+    background: green;
+}
+.item-cancle {
+    background: #d40a25;
+}
+.item-home {
+    background: #0fee0f;
+}
+.item-store {
+    background: #1768ff;
+}

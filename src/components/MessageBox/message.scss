@@ -1,0 +1,33 @@
+.success{
+    color : #20a020;
+}
+
+.error{
+    color: #a02020;
+}
+
+.alert{
+    padding : 1rem;
+    border: 0.1rem solid transparent;
+    border: 0.5rem;
+    position: relative;
+    margin-top: calc(72px * 1);
+    font-size : 1.8rem;
+}
+
+.alert-info{
+    color: #2020a0;
+    background-color: #e0e0ff;
+}
+
+.alert-danger{
+    color: #a02020;
+    background-color: #ffe0e0e0;
+}
+
+.alert-success{
+    color: #20a020;
+    background-color: #bcf3bc;
+}
+
+
