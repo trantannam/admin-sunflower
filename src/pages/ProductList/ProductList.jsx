@@ -19,7 +19,7 @@ const ProductList = () => {
 
     const fetchProductList = async () => {
         const products = await axios.get('/product');
-        const ProductList = products.data.products || [];
+        const ProductList = products.data.data || [];
         setData(ProductList);
     }
     useEffect(() => {
@@ -143,10 +143,10 @@ const ProductList = () => {
                     disableSelectionOnClick
                     rows={data && data.map((item, index) => ({
                         id: item._id,
-                        name: item.productname,
+                        name: item.product_name,
                         img: item.image,
                         price: item.price,
-                        type: item.producttype.name || '',
+                        type: item.product_type.name || '',
                         description: item.description
                     }))}
                     columns={columns}

@@ -6,6 +6,7 @@ import { ImFolderUpload } from 'react-icons/im';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import request from 'utils/request.js';
 
 const Product = () => {
     document.title = 'Admin - Thông tin sản phẩm';
@@ -13,7 +14,6 @@ const Product = () => {
     const [product, setProduct] = useState({});
     const [loadingPage, setLoadingPage] = useState(false);
     const [imageProduct, setImageProduct] = useState('');
-    const [backgroundProduct, setBackgroundProduct] = useState('');
 
     const [typeOption, setTypeOption] = useState([])
     const [typeSelected, setTypeSelected] = useState({
@@ -21,10 +21,10 @@ const Product = () => {
         value: 0
     });
     useEffect(() => {
-        axios.get('/producttype')
+        request.get('/product-type')
         .then(res => {
             if (res.data.success) {
-                const data = res.data.producttype
+                const data = res.data.data
                 const options = data.map((item) => ({
                     label: item.name,
                     value: item._id
@@ -36,8 +36,8 @@ const Product = () => {
 
     const [formData, setFormData] = useState({
         name: '',
-        brand: '',
-        producttype: '',
+        img: '',
+        product_type: '',
         amount: 0,
         price: '',
         description: '',
@@ -47,27 +47,40 @@ const Product = () => {
         setTypeSelected(e);
         setFormData(prev => ({
             ...prev,
-            producttype: e.value
+            product_type: e.value
         }))
+    }
+
+    function handleImageChange (e) {
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        if (file) {
+            reader.onloadend = () => {
+                setImageProduct(e.target.files[0])
+                setFormData(prev => ({...prev, img: reader.result}))
+            }
+            reader.readAsDataURL(file)
+        }
     }
 
     const handleFetchDataProduct = (id) => {
         setLoadingPage(true)
-        axios.get(`/product/${id}`)
+        request.get(`/product/${id}`)
         .then(res => {
             if(res.data.success) {
-                const data = res.data.result;
+                const data = res.data.data;
                 setProduct(data);
                 setFormData(() => ({
                     img: data.image || '',
-                    name: data.productname || '',
-                    producttype: data.producttype.name || '',
+                    name: data.product_name || '',
+                    amount: data.amount || '',
+                    product_type: data.product_type._id || '',
                     price: data.price || '',
                     description: data.description || '',
                 }))
                 setTypeSelected({
-                    label: data.producttype.name,
-                    value: data.producttype._id
+                    label: data.product_type.name,
+                    value: data.product_type._id
                 })
             }
             setLoadingPage(false)
@@ -80,7 +93,7 @@ const Product = () => {
 
     const submitInfo = (e) => {
         e.preventDefault();
-        axios.post('/product/update', {...formData, id})
+        request.post(`/product/${id}/update`, {...formData, img: ''})
         .then(res=>{
             if(res.data.success) {
                 setProduct(res.data.data)
@@ -90,27 +103,12 @@ const Product = () => {
         .catch(e => {
             toast.error(e.message)
         })
-        if (backgroundProduct) {
-            const fb = new FormData()
-            fb.append('type', 'background')
-            fb.append('id', id)
-            fb.append('image', backgroundProduct, backgroundProduct.name)
-            axios.put('/product/updateProductImage', fb)
-            .then(res=> {
-                if(!res.data.success) {
-                    toast.error('Hình ảnh cập nhật không thành công.')
-                    setBackgroundProduct('')
-                }
-            }).catch(e=>{
-                toast.error(e.message)
-            })
-        }
         if (imageProduct) {
             const fi = new FormData()
             fi.append('type', 'img')
             fi.append('id', id)
             fi.append('image', imageProduct, imageProduct.name)
-            axios.put('/product/updateProductImage', fi)
+            request.put(`/product/${id}/update-image`, fi)
             .then(res=> {
                 if(!res.data.success) {
                     toast.error('Hình ảnh cập nhật không thành công.')
@@ -153,20 +151,26 @@ const Product = () => {
                                 </div>
                                 <div className="updateForm__left-item">
                                     <label htmlFor="name" className="item__label">Tên sản phẩm</label>
-                                    <input id="name" className="item__input" type="text" value={formData?.name} onChange={e => setFormData(prev => ({ ...prev, name: e.target.value}))} />
+                                    <input id="name" className="item__input" type="text" value={formData.name || ''} onChange={e => setFormData(prev => ({ ...prev, name: e.target.value}))} />
                                 </div>
                                 <label className="item__label">Hình sản phẩm: </label>
                                 <div className="updateForm__left-item fileImage">
-                                    <div className="w-3/5">
-                                        <img className="leftImg" src={imageProduct.path || formData?.img} alt="" />
+                                    <div className="w-1/2">
+                                        <img className="leftImg" src={formData.img} alt="" />
                                     </div>
-                                    <div className="w-2/5 w-full">
-                                        <div className="flex">
+                                    <div className="w-1/2 h-full py-4">
+                                        <div className="">
                                             <label htmlFor="product_img" className="choose border w-full border-gray-300 px-8 py-2 text-white hover:cursor-pointer text-2xl rounded-md bg-sky-500 hover:bg-sky-400">
                                                 <ImFolderUpload />
                                             </label>
-                                            <input className="leftFile" accept="image/png, image/jpeg" id="product_img" hidden type="file" onChange={e => setImageProduct(e.target.files[0])} />
-                                            <span>{imageProduct?.name}</span>
+                                            <input
+                                                className="leftFile"
+                                                accept="image/*"
+                                                id="product_img"
+                                                hidden
+                                                type="file"
+                                                onChange={e =>handleImageChange(e)}
+                                            />
                                         </div>
                                     </div>
                                 </div>

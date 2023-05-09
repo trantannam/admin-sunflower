@@ -8,14 +8,14 @@ import { toast } from "react-toastify";
 export default function Login() {
   const navigate = useNavigate();
   const [form, setForm]= useState({
-    phone: '',
+    login_name: '',
     password: ''
   });
   const dispatch = useDispatch()
 
   const handLogin = (e) => {
     e.preventDefault();
-    if(form.phone && form.password) {
+    if(form.login_name && form.password) {
       axios.post('http://localhost:5000/staff/signin', form)
       .then(res=> {
         if(res.data.success) {
@@ -36,7 +36,7 @@ export default function Login() {
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
                 className="w-full"
-                alt="Phone"
+                alt="login_name"
               />
             </div>
             <div className="md:w-8/12 lg:w-5/12 lg:ml-20">
@@ -46,9 +46,9 @@ export default function Login() {
                   <input
                     type="text"
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    placeholder="Phone"
+                    placeholder="login_name"
                     required
-                    onChange={(e) => setForm(prev => ({...prev, phone: e.target.value}))}
+                    onChange={(e) => setForm(prev => ({...prev, login_name: e.target.value}))}
                   />
                 </div>
 

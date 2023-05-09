@@ -24,7 +24,7 @@ const CustomerList = () => {
     const [idUser, setIdUser] = useState();
 
     const fetchUserList = async () => {
-        const customer = await request.get('/customer');
+        const customer = await axios.get('/customer');
         if (customer.data.success) {
             const data = customer.data.user
             setData(data);
