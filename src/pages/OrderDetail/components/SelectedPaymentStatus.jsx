@@ -8,23 +8,22 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectedStatus(props) {
+export default function SelectedPaymentStatus(props) {
   const { id, order, refreshData } = props
 
   const options = [
-    { id: -1, name: 'Đã hủy' },
-    { id: 0, name: 'Đang xử lý' },
-    { id: 1, name: 'Đã tiếp nhận' },
-    { id: 2, name: 'Đang vận chuyển' },
-    { id: 3, name: 'Hoàn tất' },
+    { id: "cancel", name: 'Đã hủy' },
+    { id: "waiting for pay", name: 'Chờ thanh toán' },
+    { id: "cod", name: 'Thanh toán khi nhận hàng' },
+    { id: "paid", name: 'Đã thanh toán' },
   ]
   const [statusSelected, setStatusSelected] = useState(options[1])
   const handleChangeStatus = (status) => {
     console.log(status)
-    request.post(`/purchase-order/update-delivery-status`, { tranCode: id, deliveryStatus: status })
+    request.post(`/purchase-order/update-payment-status`, { tranCode: id, paymentStatus: status })
       .then(res => {
         if (res.data.success) {
-          order.deliveryStatus = status
+          order.paymentStatus = status
           refreshData()
           toast.success(res.data)
         } else {
@@ -66,11 +65,10 @@ export default function SelectedStatus(props) {
                   >
                     {({ selected, active }) => (
                       <>
-                        {person.id === 0 && <div className="m-0 btn btn-pending" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
-                        {person.id === 1 && <div className="m-0 btn btn-transport" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
-                        {person.id === 2 && <div className="m-0 btn btn-transport" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
-                        {person.id === 3 && <div className="m-0 btn btn-received" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
-                        {person.id === -1 && <div className="m-0 btn btn-cancel" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
+                        {person.id === "waiting for pay" && <div className="m-0 btn btn-pending" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
+                        {person.id === "cod" && <div className="m-0 btn btn-transport" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
+                        {person.id === "paid" && <div className="m-0 btn btn-received" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
+                        {person.id === "cancel" && <div className="m-0 btn btn-cancel" onClick={() => handleChangeStatus(person.id)}>{person.name}</div>}
                         {selected ? (
                           <span
                             className={classNames(

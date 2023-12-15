@@ -1,9 +1,9 @@
 import initFormData from 'assets/data/configInitForm.json'
-import axios from "axios"
 import InputField from 'components/custom-field/InputField'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
+import request from 'utils/request'
 import './Product.scss'
 
 export default function ProductConfig () {
@@ -14,7 +14,7 @@ export default function ProductConfig () {
   const { id } = useParams()
   const [formData, setFormData] = useState(initFormData)
   useEffect(()=> {
-      axios.get(`/products/config/${id}`)
+      request.get(`/products/config/${id}`)
       .then(res => {
           if (res.data.success) {
               if (res.data.data.dong_co) {
@@ -41,7 +41,7 @@ export default function ProductConfig () {
 
   const updateProductConfig = (e) => {
     e.preventDefault();
-    axios.put(`/products/config/update/${id}`, formData)
+    request.put(`/products/config/update/${id}`, formData)
         .then(res => {
             if (res.data.success) {
               toast.success('Cập nhật thành công')

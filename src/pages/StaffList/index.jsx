@@ -1,6 +1,5 @@
 import { DataGrid } from '@material-ui/data-grid';
 import { listUsers } from 'actions/userAction';
-import axios from 'axios';
 import LoadingBox from 'components/LoadingBox';
 import Modal from 'components/Modal';
 import { useEffect, useState } from 'react';
@@ -9,6 +8,7 @@ import { ImBin } from 'react-icons/im';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import request from 'utils/request';
 import EditUser from './components/EditUser';
 import Register from './components/Register';
 
@@ -22,7 +22,7 @@ const StaffList = () => {
     const [idUser, setIdUser] = useState();
 
     const fetchStaffList = async () => {
-        const users = await axios.get('/staff');
+        const users = await request.get('/staff');
         const userList = users.data.data || [];
         setData(userList);
     }
@@ -41,7 +41,7 @@ const StaffList = () => {
         setIdUser(id);
     }
     const handleDelete = () => {
-        axios.delete(`/staffs/deleteUser/${idSelectDel}`)
+        request.delete(`/staffs/deleteUser/${idSelectDel}`)
         .then(res => {
             if (res.data.success) {
                 fetchStaffList()
@@ -155,7 +155,6 @@ const StaffList = () => {
             <div className="userlist__header">
                 <span className="userlist__header-title">Danh sách nhân viên</span>
                 <div>
-                    <Link to='/staff/time-service' className="btn btn-pending">Lịch bảo dưỡng</Link>
                     <button className="btn btn-info ml-4" onClick={()=>setModal(true)}>Thêm mới nhân viên</button>
                 </div>
             </div>

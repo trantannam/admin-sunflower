@@ -1,9 +1,15 @@
 import moment from "moment";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import numberWithCommas from "utils/numberWithCommas";
 
 export default function CardPageVisits(props) {
   const { data } = props
+  const [newOrder, setNewOder] = useState([]);
+
+  useEffect(() => {
+    setNewOder(data?.filter(item => item.deliveryStatus >= 0 && item.deliveryStatus < 3).slice(-5).reverse());
+  }, [props])
 
   return (
     <>
@@ -45,31 +51,30 @@ export default function CardPageVisits(props) {
               </tr>
             </thead>
             <tbody>
-              { data?.length ?
-                  data.map(item => (
+              {newOrder?.length ?
+                newOrder.map(item => (
                   <tr key={item._id}>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                      {item.user.name ?? 'Khách hàng'}
+                      {item.customer?.customer_name ?? 'Khách hàng'}
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                       {moment(item.createdAt).format('DD/MM/YYYY hh:mm')}
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      {numberWithCommas(item.totalPrice)}
+                      {numberWithCommas(item.totalEstimate)}
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                       <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                      {item.status === 0 && <div className="btn btn-pending">Chờ xử lý</div>}
-                      {item.status === 2 && <div className="btn btn-transport">Đã tiếp nhận</div>}
-                      {item.status === 5 && <div className="btn btn-transport">Đang hoàn trả</div>}
-                      {item.status === 3 && <div className="btn btn-transport">Đang vận chuyển</div>}
+                      {item.deliveryStatus === 0 && <div className="btn btn-pending">Chờ xử lý</div>}
+                      {item.deliveryStatus === 1 && <div className="btn btn-transport">Đã tiếp nhận</div>}
+                      {item.deliveryStatus === 2 && <div className="btn btn-transport">Đang vận chuyển</div>}
                     </td>
                   </tr>)) : <tr>
-                      <td colSpan="4" className="border-t-10 px-6 align-middle border-l-0 border-r-0 text-xs text-center opacity-50 whitespace-nowrap p-8 text-left w-full">
-                        Không có đơn hàng
-                      </td>
-                    </tr>
-                }
+                  <td colSpan="4" className="border-t-10 px-6 align-middle border-l-0 border-r-0 text-xs text-center opacity-50 whitespace-nowrap p-8 text-left w-full">
+                    Không có đơn hàng mới
+                  </td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>

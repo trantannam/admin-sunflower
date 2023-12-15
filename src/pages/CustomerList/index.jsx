@@ -1,6 +1,5 @@
 import { DataGrid } from '@material-ui/data-grid';
 import { listUsers } from 'actions/userAction';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -24,7 +23,7 @@ const CustomerList = () => {
     const [idUser, setIdUser] = useState();
 
     const fetchUserList = async () => {
-        const customer = await axios.get('/customer');
+        const customer = await request.get('/customer');
         if (customer.data.success) {
             const data = customer.data.user
             setData(data);
@@ -159,7 +158,7 @@ const CustomerList = () => {
                         disableSelectionOnClick
                         rows={data && data.map((user, index) => ({
                             id: user._id,
-                            name: user.name,
+                            name: user.customer_name,
                             login_name: user.login_name,
                             phone: user.phone_number,
                             address: user.address}))}

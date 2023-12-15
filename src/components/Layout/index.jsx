@@ -40,7 +40,7 @@ const navigation = [
   { name: 'Nhân viên', href: '/staff', icon: UserGroupIcon, current: false },
   { name: 'Khuyến mãi', href: '/promotion', icon: FaGifts, current: false },
   { name: 'Sản phẩm', href: '/products', icon: GiFlowerPot, current: false },
-  { name: 'Loại sản phẩm', href: '/vehicle-type', icon: TbJumpRope, current: false },
+  { name: 'Loại sản phẩm', href: '/product-type', icon: TbJumpRope, current: false },
   { name: 'Đơn hàng', href: '/orders', icon: ClipboardDocumentCheckIcon, current: false },
 ]
 function classNames(...classes) {
@@ -278,7 +278,7 @@ export default function Layout(props) {
                   <Route path="/staff" element={<StaffList />} />
                   <Route path="/orders/:id" element={<OrderDetail />} />
                   <Route path="/orders" element={<OrderList />} />
-                  <Route path="/vehicle-type" element={<VehicleType />} />
+                  <Route path="/product-type" element={<VehicleType />} />
                   <Route path="/promotion" element={<Promotion />} />
                   <Route path="/promotion/:code" element={<PromotionDetail />} />
                   <Route path="/products" element={<ProductList />} />

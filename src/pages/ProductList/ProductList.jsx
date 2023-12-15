@@ -1,5 +1,4 @@
 import { DataGrid } from '@material-ui/data-grid';
-import axios from 'axios';
 import LoadingBox from 'components/LoadingBox';
 import Modal from 'components/Modal';
 import { useEffect, useState } from 'react';
@@ -7,7 +6,9 @@ import { ImBin } from 'react-icons/im';
 
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { apiURL } from 'utils/callAPI';
 import numberWithCommas from 'utils/numberWithCommas';
+import request from 'utils/request';
 
 const ProductList = () => {
 
@@ -18,7 +19,7 @@ const ProductList = () => {
     const [idSelectDel, setIdSelectDel] = useState('');
 
     const fetchProductList = async () => {
-        const products = await axios.get('/product');
+        const products = await request.get('/product');
         const ProductList = products.data.data || [];
         setData(ProductList);
     }
@@ -32,18 +33,18 @@ const ProductList = () => {
     }
 
     const handleDelete = (id) => {
-        axios.delete(`/product/${idSelectDel}`)
-        .then(res => {
-            if (res.data.success) {
-                fetchProductList();
-                setModal(false);
-                toast.success(res.data.message);
-            } else {
-                toast.error(res.data.message);
-            }
-        }).catch(err => {
-            toast.error('Không thể kết nối máy chủ');
-        })
+        request.delete(`/product/${idSelectDel}`)
+            .then(res => {
+                if (res.data.success) {
+                    fetchProductList();
+                    setModal(false);
+                    toast.success(res.data.message);
+                } else {
+                    toast.error(res.data.message);
+                }
+            }).catch(err => {
+                toast.error('Không thể kết nối máy chủ');
+            })
     }
 
     const columns = [
@@ -58,7 +59,7 @@ const ProductList = () => {
             field: 'name', headerName: 'Tên sản phẩm', width: 300, headerClassName: 'text', renderCell: (params) => {
                 return (
                     <div className="columnImg">
-                        <img className="columnImg__img" src={params.row.img} alt="" />
+                        <img className="columnImg__img" src={apiURL + params.row.img} alt="" />
                         <span>
                             {params.row.name}
                         </span>
@@ -98,7 +99,7 @@ const ProductList = () => {
                         </Link>
                         <button className="btn btn-cancel"
                             onClick={() => handleOpenModalDel(params.row.id)}
-                            >
+                        >
                             <ImBin />
                         </button>
                     </div>
@@ -111,25 +112,25 @@ const ProductList = () => {
         <div className="productlist">
             <Modal show={modal} setShow={setModal} size="sm:max-w-lg" title="Xác nhận xóa sản phẩm">
                 <div className="mt-2">
-                <p className="text-lg text-gray-800">
-                    Bạn có chắc chắn muốn xóa sản phẩm này?
-                </p>
+                    <p className="text-lg text-gray-800">
+                        Bạn có chắc chắn muốn xóa sản phẩm này?
+                    </p>
                 </div>
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={ ()=> handleDelete() }
-                >
-                    Xác nhận
-                </button>
-                <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={()=> setModal(false)}
-                >
-                    Bỏ qua
-                </button>
+                    <button
+                        type="button"
+                        className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                        onClick={() => handleDelete()}
+                    >
+                        Xác nhận
+                    </button>
+                    <button
+                        type="button"
+                        className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
+                        onClick={() => setModal(false)}
+                    >
+                        Bỏ qua
+                    </button>
                 </div>
             </Modal>
             <div className="productlist__header">
@@ -144,7 +145,7 @@ const ProductList = () => {
                     rows={data && data.map((item, index) => ({
                         id: item._id,
                         name: item.product_name,
-                        img: item.image,
+                        img: item.image[0],
                         price: item.price,
                         type: item.product_type.name || '',
                         description: item.description
@@ -154,7 +155,7 @@ const ProductList = () => {
                     autoHeight
                     // rowsPerPageOptions={[5]}
                     rowsPerPageOptions={[10]}
-                />: <LoadingBox />
+                /> : <LoadingBox />
             }
         </div>
     )

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 import { useEffect, useState } from 'react';
 import { AiOutlineFileProtect } from 'react-icons/ai';
 import {
@@ -12,8 +12,8 @@ const FeaturedInfo = () => {
 
     useEffect(() => {
         const fetchDataHome = async () => {
-            const sales = await axios.get("/api/dashboard/summary");
-            const dataSales = sales.data.data || [];
+            const sales = await request.get("/dashboard/summary");
+            const dataSales = sales.data.summary || [];
             setTotalSales(dataSales)
         };
 
@@ -31,11 +31,11 @@ const FeaturedInfo = () => {
         <div className="featured">
             <div className="featured__item color-green">
                 <div className="featured__item-content">
-                    <span className="featured__item-content-money">
-                        {totalSales ? DataFormater(totalSales?.total_revenue) : 0} VNĐ
-                    </span>
                     <span className="featured__item-content-title">
                         Doanh thu
+                    </span>
+                    <span className="featured__item-content-money">
+                        {totalSales ? totalSales?.revenue?.toLocaleString() : 0} VNĐ
                     </span>
                 </div>
                 <div className="featured__item-icon">
@@ -45,11 +45,11 @@ const FeaturedInfo = () => {
 
             <div className="featured__item color-blue">
                 <div className="featured__item-content">
-                    <span className="featured__item-content-money">
-                        {totalSales ? totalSales.total_invoice : '0'}
-                    </span>
                     <span className="featured__item-content-title">
                         Đơn hàng
+                    </span>
+                    <span className="featured__item-content-money">
+                        {totalSales ? totalSales.purchase : '0'}
                     </span>
                 </div>
                 <div className="featured__item-icon">
@@ -59,10 +59,10 @@ const FeaturedInfo = () => {
 
             <div className="featured__item color-total">
                 <div className="featured__item-content">
-                    <span className="featured__item-content-money">{totalSales ? totalSales.total_sell : 0}</span>
                     <span className="featured__item-content-title">
                         Sản phẩm đang bán
                     </span>
+                    <span className="featured__item-content-money">{totalSales ? totalSales.product : 0}</span>
                 </div>
                 <div className="featured__item-icon">
                     <RiLuggageCartLine />
@@ -70,10 +70,10 @@ const FeaturedInfo = () => {
             </div>
             <div className="featured__item color-total">
                 <div className="featured__item-content">
-                    <span className="featured__item-content-money">{totalSales ? totalSales.total_user : 0}</span>
                     <span className="featured__item-content-title">
                         Khách hàng
                     </span>
+                    <span className="featured__item-content-money">{totalSales ? totalSales.user : 0}</span>
                 </div>
                 <div className="featured__item-icon">
                     <RiUserAddFill />

@@ -1,5 +1,4 @@
 import { DataGrid } from '@material-ui/data-grid';
-import axios from 'axios';
 import LoadingBox from 'components/LoadingBox';
 import Modal from 'components/Modal';
 import { TOAST_OPTIONS } from 'constants/productConstants';
@@ -9,6 +8,7 @@ import { RiCheckboxCircleLine, RiDeleteBin6Line } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import numberWithCommas from 'utils/numberWithCommas';
+import request from 'utils/request';
 
 OrderList.propTypes = {};
 
@@ -18,9 +18,8 @@ function OrderList(props) {
     const [delModal, setDelModal] = useState(false)
 
     const fetchOrderList = async () => {
-        const orders = await axios.get('/orders');
-        const orderList = orders.data.data || [];
-
+        const orders = await request.get('/purchase-order');
+        const orderList = orders.data.PO || [];
         setData(orderList);
     }
     useEffect(() => {
@@ -36,9 +35,10 @@ function OrderList(props) {
 
 
     const handleDelOrder = (id) => {
-        axios.delete(`/orders/remove/${curId}`)
+        request.delete(`/purchase-order/remove/${curId}`)
         .then(res => {
             if (res.data.success) {
+                console.log(res.data)
                 fetchOrderList();
                 setDelModal(false);
                 toast.success(res.data, {
@@ -53,7 +53,7 @@ function OrderList(props) {
     }
 
     const handleChangeStatusOrder = (id, status) => {
-        axios.post(`api/orders/status`, { id, status })
+        request.post(`/purchase-order/update-delivery-status`, { tranCode: id, deliveryStatus: status })
         .then(res => {
             if (res.data.success) {
               fetchOrderList()
@@ -66,7 +66,7 @@ function OrderList(props) {
 
     const columns = [
         {
-            field: 'id', headerName: 'Mã đơn hàng', width: 300, headerClassName: 'text', renderCell: (params) => {
+            field: 'id', headerName: 'Mã đơn hàng', width: 200, headerClassName: 'text', renderCell: (params) => {
                 return (
                     <span className="text">{params.row.id}</span>
                 )
@@ -94,7 +94,7 @@ function OrderList(props) {
             }
         },
         {
-            field: 'totalPrice', headerName: 'Tổng tiền', width: 200, headerClassName: 'text', renderCell: (params) => {
+            field: 'totalPrice', headerName: 'Tổng tiền', width: 180, headerClassName: 'text', renderCell: (params) => {
                 return (
                     <span className="text">{numberWithCommas(params.row.totalPrice)}</span>
                 )
@@ -118,22 +118,22 @@ function OrderList(props) {
                                 <RiCheckboxCircleLine />
                             </span>
                         </div>}
-                        {params.row.status === 2 && <div className="btn btn-transport">Đã tiếp nhận</div>}
-                        {params.row.status === 3 && <div className="btn btn-transport">Đang vận chuyển</div>}
-                        {params.row.status === 1 && <div className="btn btn-received">Đã nhận</div>}
+                        {params.row.status === 1 && <div className="btn btn-transport">Đã tiếp nhận</div>}
+                        {params.row.status === 2 && <div className="btn btn-transport">Đang vận chuyển</div>}
+                        {params.row.status === 3 && <div className="btn btn-received">Hoàn tất</div>}
                         {params.row.status === -1 && <div className="btn btn-cancel">Đã hủy</div>}
                     </div>
                 )
             }
         },
         {
-            field: 'payment', headerName: 'Thanh toán', width: 180, headerClassName: 'text', renderCell: (params) => {
+            field: 'payment', headerName: 'Thanh toán', width: 250, headerClassName: 'text', renderCell: (params) => {
                 return (
                     <div className="text relative">
-                        {params.row.payment === 0 && <div className="btn btn-pending">Đang xử lý</div>}
-                        {params.row.payment === 3 && <div className="btn btn-transport">Đang hoàn trả</div>}
-                        {params.row.payment === 1 && <div className="btn btn-received">Đã thanh toán</div>}
-                        {params.row.payment === -1 && <div className="btn btn-cancel">Đã không thành công</div>}
+                        {params.row.payment === "cod" && <div className="btn btn-pending">Thanh toán khi nhận hàng</div>}
+                        {params.row.payment === "waiting for pay" && <div className="btn btn-transport">Chờ thanh toán</div>}
+                        {params.row.payment === "paid" && <div className="btn btn-received">Đã thanh toán</div>}
+                        {params.row.payment === "cancel" && <div className="btn btn-cancel">Không thành công</div>}
                     </div>
                 )
             },
@@ -196,11 +196,11 @@ function OrderList(props) {
                         disableSelectionOnClick
                         autoHeight
                         rows={data.map((order, index) => ({
-                            id: order._id,
-                            userName: order.user?.name || '',
-                            totalPrice: order.totalPrice,
-                            status: order.status,
-                            payment: order.payment,
+                            id: order.tranCode,
+                            userName: order.customer?.customer_name || '',
+                            totalPrice: order.totalEstimate,
+                            status: order.deliveryStatus,
+                            payment: order.paymentStatus,
                             createdAt: order.createdAt,
                             updatedAt: order.updatedAt,
                         }))}

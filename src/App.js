@@ -17,14 +17,14 @@ function App() {
       return navigate('/login')
     }
   }, [userSignin])
-  
+
   return (
     <div>
       <Routes>
         <Route path="/login" element={<Login />} />
         {
           userSignin.accessToken &&
-          <Route path="*" element={<Layout/>}/>
+          <Route path="*" element={<Layout />} />
         }
       </Routes>
       <ToastContainer style={{ fontSize: 15, zIndex: 1000 }} />

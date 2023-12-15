@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-export default function Register (props) {
+export default function Register(props) {
     const { setModal, refreshTable } = props;
     const [image, setImage] = useState(null);
 
@@ -48,7 +48,7 @@ export default function Register (props) {
             setErrorMessage({ ...errorMessage, errorPassword: "Mật khẩu phải có ít nhất 8 ký tự gồm số, chữ thường, hoa và ký tự đặc biệt!" })
         }
     }
-    
+
     const checkRePassword = (value) => {
         setFormData({ ...formData, confirmPassword: value })
         if (value === formData.password) {
@@ -79,7 +79,7 @@ export default function Register (props) {
             setCheck({ ...check, [id]: false })
         }
     }
-    
+
     function FormError(props) {
         if (props.isHidden) return (<div></div>)
         else return (<div className="form-error">{props.errorMessage}</div>)
@@ -103,7 +103,7 @@ export default function Register (props) {
             })
         }
         if (count === 5) {
-            axios.post('/staff/create', fd)
+            axios.post('http://localhost:5000/staff/create', fd)
                 .then((res) => {
                     if (res.data.success) {
                         toast.success('Đăng ký thành công')
@@ -122,7 +122,7 @@ export default function Register (props) {
 
     return (
         <div className="register">
-            <form className="form" onSubmit={(e)=>handelRegisterUser(e)}>
+            <form className="form" onSubmit={(e) => handelRegisterUser(e)}>
                 <div className="form__item">
                     <div className="form__item__title">Tạo tài khoản người dùng</div>
                 </div>
@@ -150,7 +150,7 @@ export default function Register (props) {
                         required
                         onChange={(e) => checkEmail(e.target.value)} />
                     <FormError isHidden={errorMessage.errorEmail === ''} errorMessage={errorMessage.errorEmail} />
-                </div>    
+                </div>
                 <div className="form__item">
                     <label htmlFor="password" className="form__item__label">Mật khẩu</label>
                     <input

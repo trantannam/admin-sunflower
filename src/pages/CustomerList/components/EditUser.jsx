@@ -1,14 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+import request from "utils/request";
 export default function EditUser (props) {
   const { id, setModal, refreshTable } = props    
   const [image, setImage] = useState(null);
 
   useEffect(() => {
     if (id) {
-        axios.get(`api/customer/${id}`)
+        request.get(`api/customer/${id}`)
         .then(res => {
             if(res.data.success) {
                 setFormData({
@@ -83,7 +82,7 @@ export default function EditUser (props) {
         })
     }
     if (count === 4) {
-      axios.post('/customer/update', fd)
+      request.post('/customer/update', fd)
       .then((res) => {
           if (res.data.success) {
               toast.success(res.data.data)

@@ -1,5 +1,5 @@
 import { signin } from "actions/userAction";
-import axios from "axios";
+import request from 'utils/request.js';
 import { useState } from "react"
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,23 +7,26 @@ import { toast } from "react-toastify";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [form, setForm]= useState({
+  const [form, setForm] = useState({
     login_name: '',
     password: ''
   });
   const dispatch = useDispatch()
 
+  //duytan@gmail.com
+  //DuyTan@123
+
   const handLogin = (e) => {
     e.preventDefault();
-    if(form.login_name && form.password) {
-      axios.post('http://localhost:5000/staff/signin', form)
-      .then(res=> {
-        if(res.data.success) {
-          dispatch(signin(res.data))
-          toast.success("Đăng nhập thành công")
-          return navigate('/dashboard')
-        }
-      })
+    if (form.login_name && form.password) {
+      request.post('/staff/signin', form)
+        .then(res => {
+          if (res.data.success) {
+            dispatch(signin(res.data))
+            toast.success("Đăng nhập thành công")
+            return navigate('/dashboard')
+          }
+        })
     }
   }
 
@@ -48,7 +51,7 @@ export default function Login() {
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     placeholder="login_name"
                     required
-                    onChange={(e) => setForm(prev => ({...prev, login_name: e.target.value}))}
+                    onChange={(e) => setForm(prev => ({ ...prev, login_name: e.target.value }))}
                   />
                 </div>
 
@@ -59,7 +62,7 @@ export default function Login() {
                     required
                     autoComplete="true"
                     placeholder="Password"
-                    onChange={(e) => setForm(prev => ({...prev, password: e.target.value}))}
+                    onChange={(e) => setForm(prev => ({ ...prev, password: e.target.value }))}
                   />
                 </div>
                 <button
